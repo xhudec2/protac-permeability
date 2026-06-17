@@ -1,0 +1,12 @@
+[project]
+name = "protac-permeability"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pmc-miner",
+]
+
+[tool.uv.sources]
+pmc-miner = { git = "https://github.com/yaochenr/PMC_Data_Mining" }
