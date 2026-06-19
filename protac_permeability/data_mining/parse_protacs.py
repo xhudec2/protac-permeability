@@ -4,6 +4,8 @@ import numpy as np
 import pandas as pd
 from py2opsin import py2opsin
 
+from protac_permeability.chem_utils import canonicalize_smiles
+
 
 def to_smiles(x: str) -> str | None:
     if not isinstance(x, str):
@@ -15,7 +17,7 @@ def to_smiles(x: str) -> str | None:
 
 
 def parse_pampa(pampa: str, unit: str) -> float:
-    if isinstance(pampa, str) and pampa[0] == "<":
+    if isinstance(pampa, str) and (pampa[0] == "<" or pampa[0] == ">"):
         pampa = pampa[1:]
     pampa_val = float(pampa)
     match unit:
@@ -37,6 +39,8 @@ def parse_protacs(raw_csv: str, parsed_csv: str) -> None:
     df["pampa"] = np.clip(df["pampa"], a_min=1e-3, a_max=np.inf)
     df["pampa_unit"] = "10e-6 nm/s"
     df = df.drop(columns=["iupac"])
+    df["smiles"] = df["smiles"].apply(canonicalize_smiles)
+    df = df.drop_duplicates(subset=["smiles"], keep="first")
     df.to_csv(parsed_csv, index=False)
 
 
