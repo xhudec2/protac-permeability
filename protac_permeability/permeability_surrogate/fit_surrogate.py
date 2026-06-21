@@ -56,7 +56,8 @@ def fit_ensemble(data_path: str, save_dir: str, n_models: int, num_repeats: int 
                 spearman_r = spearmanr(trues, preds)[0]
                 return spearman_r
 
-            study = optuna.create_study(direction="maximize")
+            TPEsampler = optuna.samplers.TPESampler(seed=current_seed)
+            study = optuna.create_study(direction="maximize", sampler=TPEsampler)
             study.optimize(objective, n_trials=100)
             best_alpha = study.best_params["alpha"]
             model = PermeabilitySurrogate(model=Ridge(alpha=best_alpha))
