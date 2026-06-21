@@ -16,5 +16,13 @@ dependencies = [
     "seaborn>=0.13.2",
 ]
 
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["protac_permeability*"]
+exclude = ["extern*"]
+
 [tool.uv.sources]
 pmc-miner = { git = "https://github.com/yaochenr/PMC_Data_Mining" }
