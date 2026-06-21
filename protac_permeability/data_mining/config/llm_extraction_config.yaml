@@ -1,0 +1,19 @@
+data:
+  json_path: /Users/xhudec2/Documents/aime/protac-permeability/data/mined_dois
+  output_dir: /Users/xhudec2/Documents/aime/protac-permeability/data/
+  json_fields_to_remove:
+    ["pmcid", "body_text", "references", "extraction_date", "xml_metadata"]
+  sections_to_remove: ["Unknown Section", "Online content", "Source data"]
+  figure_fields_to_remove: ["id", "image_url"]
+  paper_filter_file: /Users/xhudec2/Documents/aime/protac-permeability/data/mined_dois/papers1.json
+  paper_ids_file: /Users/xhudec2/Documents/aime/protac-permeability/data/mined_dois/mining_results_20260617_101643.json
+  pdf_path: /Users/xhudec2/Documents/aime/protac-permeability/data/mined_dois
+  clean_json_dir: /Users/xhudec2/Documents/aime/protac-permeability/data/mined_dois
+  include_supplementary: true
+  filter_supplementary_by_keywords: False
+
+prompt:
+  default_prompt: Hi, who are you?
+
+results:
+  results_dir: /Users/xhudec2/Documents/aime/protac-permeability/data/mined_protacs
