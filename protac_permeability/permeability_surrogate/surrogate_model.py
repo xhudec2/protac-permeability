@@ -2,7 +2,7 @@ import pickle
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
+from huggingface_hub import snapshot_download
 from sklearn.preprocessing import StandardScaler
 
 from protac_permeability.chem_utils import calculate_properties, canonicalize_smiles
@@ -80,6 +80,11 @@ class EnsemblePermeabilitySurrogate:
             model_name = f"model_{self.models.index(model)}.pkl"
             model_path = path / model_name
             model.save(model_path)
+
+    @classmethod
+    def from_hf(cls, hf_data: str, model_path: str = "ensemble"):
+        local_dir = snapshot_download(repo_id=hf_data)
+        return cls.from_directory(local_dir + f"/{model_path}")
 
     @classmethod
     def from_directory(cls, path: str | Path):
