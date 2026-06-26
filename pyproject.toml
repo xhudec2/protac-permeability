@@ -10,12 +10,14 @@ dependencies = [
     "numpy>=2.4.6",
     "optuna>=4.9.0",
     "pandas>=3.0.3",
-    "pmc-miner",
     "py2opsin>=1.2.0",
     "rdkit>=2026.3.3",
     "scikit-learn>=1.9.0",
     "seaborn>=0.13.2",
 ]
+
+[project.optional-dependencies]
+mining = ["pmc-miner"]
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
