@@ -1039,11 +1039,15 @@ dependencies = [
     { name = "numpy" },
     { name = "optuna" },
     { name = "pandas" },
-    { name = "pmc-miner" },
     { name = "py2opsin" },
     { name = "rdkit" },
     { name = "scikit-learn" },
     { name = "seaborn" },
+]
+
+[package.optional-dependencies]
+mining = [
+    { name = "pmc-miner" },
 ]
 
 [package.metadata]
@@ -1053,12 +1057,13 @@ requires-dist = [
     { name = "numpy", specifier = ">=2.4.6" },
     { name = "optuna", specifier = ">=4.9.0" },
     { name = "pandas", specifier = ">=3.0.3" },
-    { name = "pmc-miner", git = "https://github.com/yaochenr/PMC_Data_Mining" },
+    { name = "pmc-miner", marker = "extra == 'mining'", git = "https://github.com/yaochenr/PMC_Data_Mining" },
     { name = "py2opsin", specifier = ">=1.2.0" },
     { name = "rdkit", specifier = ">=2026.3.3" },
     { name = "scikit-learn", specifier = ">=1.9.0" },
     { name = "seaborn", specifier = ">=0.13.2" },
 ]
+provides-extras = ["mining"]
 
 [[package]]
 name = "py2opsin"
