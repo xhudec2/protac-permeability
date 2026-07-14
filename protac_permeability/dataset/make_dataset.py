@@ -60,7 +60,7 @@ def parse_extracted_protacs(extracted_protacs_path: str) -> pd.DataFrame:
 
 def join_datasets(
     protacdb_path: str, extracted_protacs_path: str, out_path: str
-) -> pd.DataFrame:
+) -> None:
     protacdb_df = parse_protacdb(protacdb_path)
     extracted_df = parse_extracted_protacs(extracted_protacs_path)
 
@@ -90,19 +90,19 @@ if __name__ == "__main__":
     parser.add_argument(
         "--protacdb_path",
         type=str,
-        default="../data/protacdb/protacdb.csv",
+        default="./data/protacdb.csv",
         help="Path to the PROTACDB dataset CSV file",
     )
     parser.add_argument(
         "--extracted_protacs_path",
         type=str,
-        default="../data/extracted_protacs/extracted_protacs.csv",
+        default="./data/extracted_protacs.csv",
         help="Path to the newly extracted PROTACs dataset CSV file",
     )
     parser.add_argument(
         "--out_path",
         type=str,
-        default="../data/combined_protacs/combined_protacs.csv",
+        default="./data/combined_protacs.csv",
         help="Path to the output combined dataset CSV file",
     )
     args = parser.parse_args()

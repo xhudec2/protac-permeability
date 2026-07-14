@@ -17,7 +17,9 @@ optuna.logging.set_verbosity(optuna.logging.WARNING)
 RANDOM_SEED = 42
 
 
-def fit_ensemble(data_path: str, save_dir: str, n_models: int, num_repeats: int = 5):
+def fit_ensemble(
+    data_path: str, save_dir: str, n_models: int, num_repeats: int = 5
+) -> None:
     df = pd.read_csv(data_path)
     smiles_list = df["SMILES"].tolist()
     smiles = [canonicalize_smiles(smi) for smi in smiles_list]
