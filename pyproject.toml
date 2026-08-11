@@ -27,5 +27,8 @@ build-backend = "setuptools.build_meta"
 include = ["protac_permeability*"]
 exclude = ["extern*"]
 
+[tool.uv.workspace]
+members = ["extern/LLM-TPD-Extraction"]
+
 [tool.uv.sources]
 pmc-miner = { git = "https://github.com/yaochenr/PMC_Data_Mining" }
