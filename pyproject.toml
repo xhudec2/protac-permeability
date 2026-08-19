@@ -18,7 +18,7 @@ dependencies = [
 
 [project.optional-dependencies]
 mining = ["pmc-miner"]
-plotting = ["ipykernel", "jupyterlab>=4.0.0", "notebook>=7.0.0"]
+plotting = ["ipykernel", "jupyterlab>=4.0.0", "notebook>=7.0.0", "protac-splitter"]
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
@@ -33,3 +33,4 @@ members = ["extern/LLM-TPD-Extraction"]
 
 [tool.uv.sources]
 pmc-miner = { git = "https://github.com/yaochenr/PMC_Data_Mining" }
+protac-splitter = { git = "https://github.com/ribesstefano/PROTAC-Splitter.git", branch = "version-update" }
