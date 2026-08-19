@@ -25,7 +25,7 @@ def fit_ensemble(
     smiles = [canonicalize_smiles(smi) for smi in smiles_list]
     descriptors = [calculate_properties(smi) for smi in smiles]
     X = np.stack(descriptors)
-    y = df["PAMPA"].values
+    y = df["logPAMPA"].values
     y_bins = pd.qcut(y, q=5, labels=False, duplicates="drop")
     models = []
     sp = []
@@ -41,7 +41,7 @@ def fit_ensemble(
             def objective(trial):
                 alpha = trial.suggest_float("alpha", 0.0, 1.0)
                 inner_cv = StratifiedKFold(
-                    n_splits=2, shuffle=True, random_state=current_seed
+                    n_splits=5, shuffle=True, random_state=current_seed
                 )
                 preds, trues = [], []
                 for itrain_inner, ival_inner in inner_cv.split(train_X, y_bins[itrain]):
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--save_dir",
         type=str,
-        default="models/ensemble",
+        default="models/ensemble_final",
         help="Path to save the fitted model (only used for single model).",
     )
     parser.add_argument(

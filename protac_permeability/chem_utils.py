@@ -21,6 +21,8 @@ def try_float(pampa):
         return np.nan
 
 
+# Original code for descriptor functions adapted from
+# https://github.com/brykimjh/degrader-permeability-ml3d-metaD/blob/main/data/calculate_2d_properties.py
 def calculate_tnsa(mol):
     """Calculate Total Non-Polar Surface Area (TNSA)."""
     tpsa = rdMolDescriptors.CalcTPSA(mol)
@@ -55,9 +57,11 @@ descriptor_functions = {
     ),
     "TNSA": calculate_tnsa,
     "SizeShape": lambda mol: sum(len(ring) for ring in mol.GetRingInfo().AtomRings()),
-    "Flexibility": lambda mol: Descriptors.NumRotatableBonds(mol) / mol.GetNumBonds()
-    if mol.GetNumBonds() > 0
-    else 0,
+    "Flexibility": lambda mol: (
+        Descriptors.NumRotatableBonds(mol) / mol.GetNumBonds()
+        if mol.GetNumBonds() > 0
+        else 0
+    ),
 }
 
 
