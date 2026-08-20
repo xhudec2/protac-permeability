@@ -35,7 +35,8 @@ def parse_protacdb(protacdb_path: str) -> pd.DataFrame:
     )
     filtered_protac_db["PAMPA"] = filtered_protac_db["PAMPA"].apply(try_float)
 
-    # PROTACDB has a unit error in the Papp values for all articles apart from 10.1021/acs.jmedchem.8b01413, which is corrected here
+    # PROTAC-DB has a unit error in the PAMPA values for all articles apart
+    # from 10.1021/acs.jmedchem.8b01413, which is corrected here
     filtered_protac_db["PAMPA"] = filtered_protac_db["PAMPA"] * np.where(
         [
             "10.1021/acs.jmedchem.8b01413" in x
@@ -76,9 +77,21 @@ def join_datasets(
 
     combined_df = pd.concat([extracted_df, protacdb_df], ignore_index=True)
     combined_df["SMILES"] = combined_df["SMILES"].apply(canonicalize_smiles)
-    # keep the newly extracted PROTACs if duplicates exist
     combined_df = combined_df.dropna(subset=["SMILES"])
-    combined_df = combined_df.drop_duplicates(subset=["SMILES"], keep="first")
+    # for duplicated SMILES: keep the first row if PAMPA values disagree (newly mined data comes first),
+    # and if they agree, keep the last row (PROTAC-DB come first)
+    pampa_nunique = combined_df.groupby("SMILES")["PAMPA"].transform("nunique")
+    disagreeing_pampa = pampa_nunique > 1
+    combined_df = pd.concat(
+        [
+            combined_df[disagreeing_pampa].drop_duplicates(
+                subset=["SMILES"], keep="first"
+            ),
+            combined_df[~disagreeing_pampa].drop_duplicates(
+                subset=["SMILES"], keep="last"
+            ),
+        ]
+    ).sort_index()
     combined_df = combined_df.reset_index()
     combined_df = combined_df.rename(columns={"index": "protac_id"})
 

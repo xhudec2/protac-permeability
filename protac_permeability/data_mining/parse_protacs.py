@@ -37,7 +37,7 @@ def parse_protacs(raw_csv: str, parsed_csv: str) -> None:
         lambda row: parse_pampa(row.pampa, row.pampa_unit), axis=1
     ).astype(np.float32)
     df["pampa"] = np.clip(df["pampa"], a_min=1e-3, a_max=np.inf)
-    df["pampa_unit"] = "10e-6 nm/s"
+    df["pampa_unit"] = "nm/s"
     df = df.drop(columns=["iupac"])
     df["smiles"] = df["smiles"].apply(canonicalize_smiles)
     df = df.drop_duplicates(subset=["smiles"], keep="first")
