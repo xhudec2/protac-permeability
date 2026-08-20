@@ -69,6 +69,18 @@ def parse_extracted_protacs(extracted_protacs_path: str) -> pd.DataFrame:
     return new_protacs
 
 
+def join_dois(dois: pd.Series) -> str:
+    if dois.nunique() == 1:
+        return dois.iloc[0]
+
+    doi_str = ""
+    for doi in dois.dropna().unique():
+        if doi_str != "":
+            doi_str += ";"
+        doi_str += doi.replace(" ", "")
+    return doi_str
+
+
 def join_datasets(
     protacdb_path: str, extracted_protacs_path: str, out_path: str
 ) -> None:
@@ -78,6 +90,11 @@ def join_datasets(
     combined_df = pd.concat([extracted_df, protacdb_df], ignore_index=True)
     combined_df["SMILES"] = combined_df["SMILES"].apply(canonicalize_smiles)
     combined_df = combined_df.dropna(subset=["SMILES"])
+
+    # collect all DOIs for a given SMILES as "doi1;doi2;..." before deduplicating
+    combined_df["Article DOI"] = combined_df.groupby("SMILES")["Article DOI"].transform(
+        join_dois
+    )
     # for duplicated SMILES: keep the first row if PAMPA values disagree (newly mined data comes first),
     # and if they agree, keep the last row (PROTAC-DB come first)
     pampa_nunique = combined_df.groupby("SMILES")["PAMPA"].transform("nunique")
