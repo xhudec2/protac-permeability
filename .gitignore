@@ -223,3 +223,4 @@ models/*
 splits/*
 figures/*
 *.DS_Store
+!protac_permeability/paper_figures.ipynb
