@@ -1,1 +1,86 @@
-# protac-permeability
+# Protac permeability prediction challenges
+
+### Code structure
+```sh
+protac_permeability
+├── chem_utils.py                       # utils for parsing and training
+├── data_mining                         
+│   ├── config          
+│   │   └── llm_extraction_config.yaml  # config for extern/LLM-TPD-Extraction LLM extraction
+│   ├── miner.py                        # DOI based publication miner
+│   ├── parse_protacs.py                # script for parsing new raw data
+│   └── prompts
+│       └── prompt_pampa.md             # prompt for extern/LLM-TPD-Extraction LLM extraction
+├── dataset
+│   └── make_dataset.py                 # script for combining PROTAC-DB 3.0 data with the newly mined data
+├── permeability_surrogate
+│   ├── __init__.py
+│   ├── surrogate_model.py              # model definition
+│   └── fit_surrogate.py                # model training
+├── paper_figures.ipynb                 # paper figures notebook
+└── plot_style.py
+```
+
+### LLM Data mining
+It is necesarry to create an `.env` file as described in `extern/LLM-TPD-Extraction/README.md`
+
+First mining the publications automatically can be done as
+
+```sh
+uv run protac_permeability/data_mining/miner.py \
+    --doi_csv data/dois.csv
+    --out_dir data
+```
+
+Then, it is possible to run the data mining code as
+```sh
+cd extern/LLM-TPD-Extraction
+pixi run python scripts/run_pipeline.py \
+    --config_path ../../protac_permeability/data_mining/config/llm_extraction_config.yaml \
+    --input_prompt ../../protac_permeability/data_mining/prompts/prompt_pampa.md \
+    --cleaning \
+    --llm \
+    --with_history \
+    --use_api \
+    --csv
+```
+
+This extracts data from the listed publications and outputs a combined csv file with all mined data points. However, most data points do not have associated SMILES strings / IUPAC names, so it is necessary to go through the sucessfully mined papers to verify that the mined data is correct, the mined sructures are actually PROTACs, and to add any missing entries, SMILES or IUPAC names.
+
+### Dataset creation
+
+To create the dataset from a csv of unparsed entries, run
+
+```sh
+uv run protac_permeability/data_mining/parse_protacs.py \
+    --raw_csv data/new_protacs_raw.csv \
+    --parsed_csv data/new_protacs_parsed.csv
+```
+
+which outputs a parsed csv with unified PAMPA units, IUPAC names transformed to SMILES strings and canonicalized SMILES. Then this parsed dataset can be combined with PROTAC-DB 3.0 using
+
+```sh
+uv run protac_permeability/dataset/make_dataset.py \
+    --extracted_protacs_path ./data/new_protacs_parsed.csv \
+    --out_path data/combined_protacs.csv
+```
+which returns the final dataset.
+
+### Model training
+To train the models on the new data run
+```sh
+uv run protac_permeability/permeability_surrogate/fit_surrogate.py \
+    --data_path data/combined_protacs.csv
+    --save_dir models/test_model
+```
+For optional arguments:
+```sh
+uv run protac_permeability/permeability_surrogate/fit_surrogate.py --help
+```
+
+### Figures
+To reproduce figures and results from the paper, run `protac_permeability/paper_figures.ipynb`
+
+
+### AI Usage Statement
+During the development of the code we used LLM tools like Claude and Gemini for helping with coding, code refactoring and writing documentation. 

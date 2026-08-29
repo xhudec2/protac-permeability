@@ -130,9 +130,9 @@ def fit_ensemble(
     sps = [spearmanr(y, preds[i])[0] for i in range(num_repeats)]
     rmses = [np.sqrt(mean_squared_error(y, preds[i])) for i in range(num_repeats)]
     r2 = [r2_score(y, preds[i]) for i in range(num_repeats)]
-    print(f"Mean Spearman correlation: {np.mean(sps):.4f} ± {np.std(sps):.4f}")
-    print(f"Mean RMSE: {np.mean(rmses):.4f} ± {np.std(rmses):.4f}")
-    print(f"Mean R2: {np.mean(r2):.4f} ± {np.std(r2):.4f}")
+    print(f"Mean Spearman correlation: {np.mean(sps):.2f} ± {np.std(sps):.2f}")
+    print(f"Mean RMSE: {np.mean(rmses):.2f} ± {np.std(rmses):.2f}")
+    print(f"Mean R2: {np.mean(r2):.2f} ± {np.std(r2):.2f}")
     ensemble_model = EnsemblePermeabilitySurrogate(models=models)
     ensemble_model.save(save_dir)
     return [
@@ -170,7 +170,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--dist_threshold",
-        type=None | float,
+        type=float,
         default=None,
         help="Threshold for butina clustering.",
     )
