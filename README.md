@@ -108,4 +108,4 @@ uv run protac_permeability/permeability_surrogate/fit_surrogate.py --help
 To reproduce figures and results from the paper, run `protac_permeability/paper_figures.ipynb`. You need to install `plotting` dependencies.
 
 ### AI Usage Statement
-During the development of the code we used LLM tools like Claude and Gemini for helping with coding, code refactoring and writing documentation.
+During the development of the code we used LLM tools like Claude and Gemini to help with tasks such as coding, plotting, code refactoring, reviewing, debugging, writing prompts for the LLM miner, writing documentation and drafting.
