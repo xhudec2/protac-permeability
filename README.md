@@ -1,6 +1,6 @@
 # The Challenges of PROTAC Permeability Prediction
 
-### Code structure
+### Code Structure
 ```sh
 protac_permeability
 ├── chem_utils.py                       # utils for parsing and training
@@ -45,7 +45,7 @@ or
 uv sync --extra plotting
 ```
 
-### LLM data mining
+### LLM Data Mining
 It is necesarry to create an `.env` file as described in `extern/LLM-TPD-Extraction/README.md`
 
 First mining the publications automatically can be done as
@@ -71,7 +71,7 @@ pixi run python scripts/run_pipeline.py \
 
 This extracts data from the listed publications and outputs a combined csv file with all mined data points. However, most data points do not have associated SMILES strings / IUPAC names, so it is necessary to go through the sucessfully mined papers to verify that the mined data is correct, the mined sructures are actually PROTACs, and to add any missing entries, SMILES or IUPAC names.
 
-### Dataset creation
+### Dataset Creation
 
 To create the dataset from a csv of unparsed entries, run
 
@@ -90,7 +90,7 @@ uv run protac_permeability/dataset/make_dataset.py \
 ```
 which returns the final dataset.
 
-### Model training
+### Model Training
 To train the models on the new data run
 ```sh
 uv run protac_permeability/permeability_surrogate/fit_surrogate.py \
@@ -105,5 +105,5 @@ uv run protac_permeability/permeability_surrogate/fit_surrogate.py --help
 ### Figures
 To reproduce figures and results from the paper, run `protac_permeability/paper_figures.ipynb`.
 
-### AI usage statement
+### AI Usage Statement
 During the development of the code we used LLM tools like Claude and Gemini for helping with coding, code refactoring and writing documentation. 
