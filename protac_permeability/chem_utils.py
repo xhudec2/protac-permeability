@@ -15,9 +15,10 @@ def canonicalize_smiles(smi: str) -> str:
 
 def try_float(pampa):
     try:
-        if isinstance(pampa, str) and (pampa[0] == "<" or pampa[0] == ">"):
+        if isinstance(pampa, str):
             pampa = pampa.strip()
-            pampa = pampa[1:]
+            if pampa[0] == "<" or pampa[0] == ">":
+                pampa = pampa[1:]
         pampa_val = float(pampa)
         return pampa_val
     except Exception as _:
@@ -35,6 +36,10 @@ def parse_pampa(pampa: str, unit: str) -> float:
             pampa_val = np.power(10, -pampa_val + 7)
         case "log (10-6 cm/s)":
             pampa_val = np.power(10, pampa_val + 7)
+        case "nm/s":
+            pass
+        case _:
+            raise ValueError(f"Unknown unit: {unit}")
     return pampa_val
 
 
