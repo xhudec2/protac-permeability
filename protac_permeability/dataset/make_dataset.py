@@ -34,7 +34,7 @@ def parse_protacdb(protacdb_path: str) -> pd.DataFrame:
         inplace=True,
     )
     filtered_protac_db["PAMPA"] = filtered_protac_db["PAMPA"].apply(try_float)
-
+    filtered_protac_db.dropna(subset=["PAMPA"], inplace=True)
     # PROTAC-DB has a unit error in the PAMPA values for all articles apart
     # from 10.1021/acs.jmedchem.8b01413, which is corrected here
     filtered_protac_db["PAMPA"] = filtered_protac_db["PAMPA"] * np.where(
@@ -122,7 +122,7 @@ def join_datasets(
     protacs_merged = protacs_merged.drop(columns=["protac_id"])
     protacs_merged = protacs_merged.reset_index()
     protacs_merged = protacs_merged.rename(columns={"index": "protac_id"})
-    protacs_merged.columns = list(protacs_merged.columns[:-18]) + list(
+    protacs_merged.columns = list(protacs_merged.columns[:-17]) + list(
         descriptor_functions.keys()
     )
     protacs_merged.to_csv(out_path, index=False)

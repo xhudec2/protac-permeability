@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from py2opsin import py2opsin
 
-from protac_permeability.chem_utils import canonicalize_smiles
+from protac_permeability.chem_utils import canonicalize_smiles, parse_pampa
 
 
 def to_smiles(x: str) -> str | None:
@@ -16,26 +16,13 @@ def to_smiles(x: str) -> str | None:
     )
 
 
-def parse_pampa(pampa: str, unit: str) -> float:
-    if isinstance(pampa, str) and (pampa[0] == "<" or pampa[0] == ">"):
-        pampa = pampa[1:]
-    pampa_val = float(pampa)
-    match unit:
-        case "10e-6 cm/s":
-            pampa_val = pampa_val * 10
-        case "-log (10-6 cm/s)":
-            pampa_val = np.power(10, -pampa_val + 7)
-        case "log (10-6 cm/s)":
-            pampa_val = np.power(10, pampa_val + 7)
-    return pampa_val
-
-
 def parse_protacs(raw_csv: str, parsed_csv: str) -> None:
     df = pd.read_csv(raw_csv)
     df["smiles"] = np.where(df.smiles.isna(), df.iupac.apply(to_smiles), df.smiles)
     df["pampa"] = df.apply(
         lambda row: parse_pampa(row.pampa, row.pampa_unit), axis=1
     ).astype(np.float32)
+    df.dropna(subset=["smiles", "pampa"], inplace=True)
     df["pampa"] = np.clip(df["pampa"], a_min=1e-3, a_max=np.inf)
     df["pampa_unit"] = "nm/s"
     df = df.drop(columns=["iupac"])
