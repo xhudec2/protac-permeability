@@ -19,6 +19,7 @@ def to_smiles(x: str) -> str | None:
 def parse_protacs(raw_csv: str, parsed_csv: str) -> None:
     df = pd.read_csv(raw_csv)
     df["smiles"] = np.where(df.smiles.isna(), df.iupac.apply(to_smiles), df.smiles)
+    df["original_pampa"] = df["pampa"]
     df["pampa"] = df.apply(
         lambda row: parse_pampa(row.pampa, row.pampa_unit), axis=1
     ).astype(np.float32)

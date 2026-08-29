@@ -33,6 +33,7 @@ def parse_protacdb(protacdb_path: str) -> pd.DataFrame:
         },
         inplace=True,
     )
+    filtered_protac_db["original_pampa"] = filtered_protac_db["PAMPA"]
     filtered_protac_db["PAMPA"] = filtered_protac_db["PAMPA"].apply(try_float)
     filtered_protac_db.dropna(subset=["PAMPA"], inplace=True)
     # PROTAC-DB has a unit error in the PAMPA values for all articles apart
