@@ -25,7 +25,7 @@ protac_permeability
 data
 ├── dois.csv                            # mined publication dois
 ├── new_protacs_raw.csv                 # new raw data 
-├── new_protacs_parsed.csv              # new raw data with unified units and canonical SMILES
+├── new_protacs_parsed.csv              # parsed new data with unified units and canonical SMILES
 ├── protacdb.csv                        # PROTAC-DB 3.0 dataset
 ├── protacdb_filtered.csv               # filtered records from PROTAC-DB 3.0 with PAMPA measurements
 └── combined_protacs.csv                # final dataset
