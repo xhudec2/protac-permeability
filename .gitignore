@@ -220,3 +220,4 @@ __marimo__/
 data/
 *.ipynb
 models/*
+splits/*
