@@ -221,3 +221,4 @@ data/
 *.ipynb
 models/*
 splits/*
+figures/*
