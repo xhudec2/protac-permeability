@@ -48,7 +48,7 @@ uv sync --extra plotting
 
 ###  Pipeline
 #### 1) LLM Data Mining
-The mining step is done using an external repository in `extern/LLM-TPD-Extraction`. For this it is necesarry to create an `.env` file as described in `extern/LLM-TPD-Extraction/README.md`
+The mining step is done using an external repository in `extern/LLM-TPD-Extraction`. For this it is necessary to create an `.env` file as described in `extern/LLM-TPD-Extraction/README.md`. Note that, since this is an external fork, it cannot be anonymized and is therefore excluded from this repository for the purposes of the review.
 
 First mining the publications automatically can be done as
 
@@ -57,7 +57,6 @@ uv run protac_permeability/data_mining/miner.py \
     --doi_csv data/dois.csv
     --out_dir data
 ```
-
 Then, it is possible to run the data mining code as
 ```sh
 cd extern/LLM-TPD-Extraction
@@ -96,8 +95,9 @@ which returns the final dataset.
 To train the models on the new data run
 ```sh
 uv run protac_permeability/permeability_surrogate/fit_surrogate.py \
-    --data_path data/combined_protacs.csv
-    --save_dir models/test_model
+    --data_path data/combined_protacs.csv \
+    --save_dir models/test_model \
+    --descriptor_cols MolecularWeight CharVol cLogP HeavyAtomCount RingCount HydrogenBondAcceptorCount HydrogenBondDonorCount RotatableBondCount TopologicalPolarSurfaceArea FractionCSP3 NumStereoCenters AllBonds RingAtoms Halogens HeteroAtoms TNSA Flexibility
 ```
 For optional arguments:
 ```sh
@@ -105,7 +105,7 @@ uv run protac_permeability/permeability_surrogate/fit_surrogate.py --help
 ```
 
 ### Figures
-To reproduce figures and results from the paper, run `protac_permeability/paper_figures.ipynb`.
+To reproduce figures and results from the paper, run `protac_permeability/paper_figures.ipynb`. You need to install `plotting` dependencies.
 
 ### AI Usage Statement
 During the development of the code we used LLM tools like Claude and Gemini for helping with coding, code refactoring and writing documentation.
