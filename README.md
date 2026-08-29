@@ -21,6 +21,7 @@ protac_permeability
 └── plot_style.py
 ```
 
+### Data Structure
 ```sh
 data
 ├── dois.csv                            # mined publication dois
@@ -45,7 +46,8 @@ or
 uv sync --extra plotting
 ```
 
-### LLM Data Mining
+###  Pipeline
+#### 1) LLM Data Mining
 It is necesarry to create an `.env` file as described in `extern/LLM-TPD-Extraction/README.md`
 
 First mining the publications automatically can be done as
@@ -71,7 +73,7 @@ pixi run python scripts/run_pipeline.py \
 
 This extracts data from the listed publications and outputs a combined csv file with all mined data points. However, most data points do not have associated SMILES strings / IUPAC names, so it is necessary to go through the sucessfully mined papers to verify that the mined data is correct, the mined sructures are actually PROTACs, and to add any missing entries, SMILES or IUPAC names.
 
-### Dataset Creation
+#### 2) Dataset Creation
 
 To create the dataset from a csv of unparsed entries, run
 
@@ -90,7 +92,7 @@ uv run protac_permeability/dataset/make_dataset.py \
 ```
 which returns the final dataset.
 
-### Model Training
+#### 3) Model Training
 To train the models on the new data run
 ```sh
 uv run protac_permeability/permeability_surrogate/fit_surrogate.py \
