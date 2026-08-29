@@ -70,7 +70,7 @@ def calculate_charvol(mol):
 descriptor_functions = {
     "MolecularWeight": Descriptors.MolWt,
     "CharVol": calculate_charvol,
-    "cLogD^7.4": Descriptors.MolLogP,
+    "cLogP": Descriptors.MolLogP,
     "HeavyAtomCount": Descriptors.HeavyAtomCount,
     "RingCount": Descriptors.RingCount,
     "HydrogenBondAcceptorCount": Descriptors.NumHAcceptors,
