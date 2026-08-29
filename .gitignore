@@ -222,3 +222,4 @@ data/
 models/*
 splits/*
 figures/*
+*.DS_Store
