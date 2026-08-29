@@ -48,7 +48,7 @@ uv sync --extra plotting
 
 ###  Pipeline
 #### 1) LLM Data Mining
-It is necesarry to create an `.env` file as described in `extern/LLM-TPD-Extraction/README.md`
+The mining step is done using an external repository in `extern/LLM-TPD-Extraction`. For this it is necesarry to create an `.env` file as described in `extern/LLM-TPD-Extraction/README.md`
 
 First mining the publications automatically can be done as
 
@@ -108,4 +108,4 @@ uv run protac_permeability/permeability_surrogate/fit_surrogate.py --help
 To reproduce figures and results from the paper, run `protac_permeability/paper_figures.ipynb`.
 
 ### AI Usage Statement
-During the development of the code we used LLM tools like Claude and Gemini for helping with coding, code refactoring and writing documentation. 
+During the development of the code we used LLM tools like Claude and Gemini for helping with coding, code refactoring and writing documentation.
