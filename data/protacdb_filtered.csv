@@ -1,0 +1,32 @@
+protac_db_id,SMILES,PAMPA,Article DOI,Target,E3_ligase,original_pampa,logPAMPA
+11,COc1cc(-c2cn(C)c(=O)c3cnccc23)cc(OC)c1CN1CCN(CCOCCOCCOc2cc(-c3scnc3C)ccc2CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)C2(F)CC2)C(C)(C)C)CC1,0.01,10.1021/acs.jmedchem.8b01413,BRD7,VHL,0.01,-9.0
+1568,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)CCOCCOCCOc2ccc(C(=O)N[C@H]3C(C)(C)[C@H](Oc4ccc(C#N)c(C(F)(F)F)c4)C3(C)C)cc2)C(C)(C)C)cc1,10.0,10.1021/acsmedchemlett.0c00194,AR,VHL,<1,-6.0
+17,COc1cc(-c2cn(C)c(=O)c3cnccc23)cc(OC)c1CN1CCN(CCOCCOc2cc(-c3scnc3C)ccc2CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)C2(F)CC2)C(C)(C)C)CC1,0.02,10.1021/acs.jmedchem.8b01413,BRD7,VHL,0.02,-8.698970004336019
+22,COc1cc(-c2cn(C)c(=O)c3cnccc23)cc(OC)c1CN1CCN(CCCCCOc2cc(-c3scnc3C)ccc2CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)C2(F)CC2)C(C)(C)C)CC1,0.01,10.1021/acs.jmedchem.8b01413,BRD9,VHL,0.01,-9.0
+4649,Cc1ccc(C(CC(=O)O)c2cc(OCCCCCCCNc3cccc4c3C(=O)N(C3CCC(=O)NC3=O)C4=O)c3c(c2)nnn3C)cc1CN1C[C@@H](C)Oc2ccccc2S1(=O)=O,0.05,10.1016/j.redox.2022.102552,KEAP1,CRBN,<0.005,-8.301029995663981
+1569,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCCCCCOc2ccc(C(=O)N[C@H]3C(C)(C)[C@H](Oc4ccc(C#N)c(C(F)(F)F)c4)C3(C)C)cc2)C(C)(C)C)cc1,10.0,10.1021/acsmedchemlett.0c00194,AR,VHL,<1,-6.0
+4643,Cc1ccc(C(CC(=O)O)c2cc(OCCCCNC(=O)COc3cccc4c3C(=O)N(C3CCC(=O)NC3=O)C4=O)c3c(c2)nnn3C)cc1CN1C[C@@H](C)Oc2ccccc2S1(=O)=O,0.05,10.1016/j.redox.2022.102552,KEAP1,CRBN,<0.005,-8.301029995663981
+1564,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)CCOCCOCCOCCOc2ccc(N3C(=S)N(c4ccc(C#N)c(C(F)(F)F)c4)C(=O)C3(C)C)cc2)C(C)(C)C)cc1,10.0,10.1021/acsmedchemlett.0c00194,AR,VHL,<1,-6.0
+335,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCCOCCOCCNC(=O)C[C@@H]2N=C(c3ccc(Cl)cc3)c3c(sc(C)c3C)-n3c(C)nnc32)C(C)(C)C)cc1,0.1,10.1021/acschembio.5b00216; 10.1021/acs.jmedchem.1c01496,BRD2,VHL,0.01,-8.0
+3895,O=C(Cn1cc(C2=C(c3ccc(Cl)cc3Cl)C(=O)NC2=O)c2ccccc21)NCCOCCOCCNc1cccc2c1C(=O)N(C1CCC(=O)NC1=O)C2=O,206.8,10.1021/acschemneuro.3c00096,GSK-3beta,CRBN,20.68,-4.684449465578095
+2340,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCCOCCOCCOC(=O)C[C@@H]2N=C(c3ccc(Cl)cc3)c3c(sc(C)c3C)-n3c(C)nnc32)C(C)(C)C)cc1,1.0,10.1021/acs.jmedchem.1c01496,BRD2,VHL,0.1,-7.0
+256,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCCCOCCCCCOc2ccc(N3C(=S)N(c4ccc(C#N)c(C(F)(F)F)c4)C(=O)C3(C)C)cc2)C(C)(C)C)cc1,10.0,10.1038/s42003-018-0105-8; 10.1021/acsmedchemlett.0c00194,AR,VHL,<1,-6.0
+328,Cc1ncsc1-c1ccc([C@H](C)NC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCCCOCCNC(=O)C[C@@H]2N=C(c3ccc(Cl)cc3)c3c(sc(C)c3C)-n3c(C)nnc32)C(C)(C)C)cc1,2.0,10.1073/pnas.1521738113; 10.1021/acs.jmedchem.1c01496,BRD4,VHL,0.2,-6.698970004336019
+2339,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCCCOCCNC(=O)C[C@@H]2N=C(c3ccc(Cl)cc3)c3c(sc(C)c3C)-n3c(C)nnc32)C(C)(C)C)cc1,0.8,10.1021/acs.jmedchem.1c01496,BRD2,VHL,0.08,-7.096910013008056
+2341,Cc1ncsc1-c1ccc([C@H](C)NC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCCCOCCOC(=O)C[C@@H]2N=C(c3ccc(Cl)cc3)c3c(sc(C)c3C)-n3c(C)nnc32)C(C)(C)C)cc1,3.0,10.1021/acs.jmedchem.1c01496,BRD2,VHL,0.3,-6.522878745280337
+2343,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCCCOCCOC(=O)C[C@@H]2N=C(c3ccc(Cl)cc3)c3c(sc(C)c3C)-n3c(C)nnc32)C(C)(C)C)cc1,6.0,10.1021/acs.jmedchem.1c01496,BRD2,VHL,0.6,-6.221848749616356
+1560,CC1(C)C(=O)N(c2ccc(C#N)c(C(F)(F)F)c2)C(=S)N1c1ccc(OCCOCCOCCOCCOc2cccc3c2C(=O)N(C2CCC(=O)NC2=O)C3=O)cc1,10.0,10.1021/acsmedchemlett.0c00194,AR,CRBN,<1,-6.0
+1562,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCCCOCCCCOc2ccc(N3C(=S)N(c4ccc(C#N)c(C(F)(F)F)c4)C(=O)C3(C)C)cc2)C(C)(C)C)cc1,10.0,10.1021/acsmedchemlett.0c00194,AR,VHL,<1,-6.0
+1563,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCC(F)(F)C(F)(F)C(F)(F)COCCCOc2ccc(N3C(=S)N(c4ccc(C#N)c(C(F)(F)F)c4)C(=O)C3(C)C)cc2)C(C)(C)C)cc1,10.0,10.1021/acsmedchemlett.0c00194,AR,VHL,<1,-6.0
+1565,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCCCOc2ccc(-c3ccc(N4C(=S)N(c5ccc(C#N)c(C(F)(F)F)c5)C(=O)C4(C)C)cc3)cc2)C(C)(C)C)cc1,10.0,10.1021/acsmedchemlett.0c00194,AR,VHL,<1,-6.0
+1566,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCC(F)(F)COc2ccc(-c3ccc(N4C(=S)N(c5ccc(C#N)c(C(F)(F)F)c5)C(=O)C4(C)C)cc3)cc2)C(C)(C)C)cc1,10.0,10.1021/acsmedchemlett.0c00194,AR,VHL,<1,-6.0
+1567,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCCCOCC(F)(F)C(F)(F)COc2ccc(N3C(=S)N(c4ccc(C#N)c(C(F)(F)F)c4)C(=O)C3(C)C)cc2)C(C)(C)C)cc1,10.0,10.1021/acsmedchemlett.0c00194,AR,VHL,<1,-6.0
+2338,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCCCCCOCCNC(=O)C[C@@H]2N=C(c3ccc(Cl)cc3)c3c(sc(C)c3C)-n3c(C)nnc32)C(C)(C)C)cc1,5.0,10.1021/acs.jmedchem.1c01496,BRD2,VHL,0.5,-6.301029995663981
+2342,Cc1ncsc1-c1ccc(CNC(=O)[C@@H]2C[C@@H](O)CN2C(=O)[C@@H](NC(=O)COCCCCCOCCOC(=O)C[C@@H]2N=C(c3ccc(Cl)cc3)c3c(sc(C)c3C)-n3c(C)nnc32)C(C)(C)C)cc1,2.0,10.1021/acs.jmedchem.1c01496,BRD2,VHL,0.2,-6.698970004336019
+4112,O=C1CCC(c2ccc(NCC(=O)N3CCN(C(=O)C4CCN(c5ccc(NC(=O)c6cnc(Oc7ccccc7)nc6)cc5)CC4)CC3)cc2)C(=O)N1,2.0,10.1016/j.bmc.2023.117259,HPGDS,CRBN,0.2,-6.698970004336019
+3893,O=C(Cn1cc(C2=C(c3ccc(Cl)cc3Cl)C(=O)NC2=O)c2ccccc21)NCCCOCCCCOCCCNc1cccc2c1C(=O)N(C1CCC(=O)NC1=O)C2=O,153.3,10.1021/acschemneuro.3c00096,GSK-3beta,CRBN,15.33,-4.814457845145625
+2544,O=C1CCC(N2C(=O)c3cccc(N4CCN(C(=O)C5CCN(c6ccc(NC(=O)c7cnc(Oc8ccccc8)nc7)cc6)CC5)CC4)c3C2=O)C(=O)N1,0.7000000000000001,10.1016/j.bmc.2023.117259,HPGDS,CRBN,0.07,-7.154901959985743
+4109,O=C1CCC(N2C(=O)c3ccc(N4CCN(C(=O)C5CCN(c6ccc(NC(=O)c7cnc(Oc8ccccc8)nc7)cc6)CC5)CC4)cc3C2=O)C(=O)N1,0.49,10.1016/j.bmc.2023.117259,HPGDS,CRBN,0.049,-7.309803919971486
+4110,Cn1cccc1C(=O)N1CCN(C(=O)Nc2ccc(N3CCC(C(=O)N4CCN(c5cccc6c5C(=O)N(C5CCC(=O)NC5=O)C6=O)CC4)CC3)cc2)CC1,0.007,10.1016/j.bmc.2023.117259,HPGDS,CRBN,0.0007,-9.154901959985743
+4111,Cn1cccc1C(=O)N1CCN(C(=O)Nc2ccc(N3CCC(C(=O)N4CCN(c5ccc6c(c5)C(=O)N(C5CCC(=O)NC5=O)C6=O)CC4)CC3)cc2)CC1,0.09,10.1016/j.bmc.2023.117259,HPGDS,CRBN,0.009,-8.045757490560675
+4113,O=C1CCC(N2C(=O)c3cc(F)c(N4CCN(C(=O)C5CCN(c6ccc(NC(=O)c7cnc(Oc8ccccc8)nc7)cc6)CC5)CC4)cc3C2=O)C(=O)N1,0.07,10.1016/j.bmc.2023.117259,HPGDS,CRBN,0.007,-8.154901959985743
