@@ -1,4 +1,4 @@
-# Protac permeability prediction challenges
+# The Challenges of PROTAC Permeability Prediction
 
 ### Code structure
 ```sh
@@ -45,7 +45,7 @@ or
 uv sync --extra plotting
 ```
 
-### LLM Data mining
+### LLM data mining
 It is necesarry to create an `.env` file as described in `extern/LLM-TPD-Extraction/README.md`
 
 First mining the publications automatically can be done as
@@ -105,5 +105,5 @@ uv run protac_permeability/permeability_surrogate/fit_surrogate.py --help
 ### Figures
 To reproduce figures and results from the paper, run `protac_permeability/paper_figures.ipynb`.
 
-### AI Usage Statement
+### AI usage statement
 During the development of the code we used LLM tools like Claude and Gemini for helping with coding, code refactoring and writing documentation. 
