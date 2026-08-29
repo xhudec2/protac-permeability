@@ -184,6 +184,13 @@ if __name__ == "__main__":
         action="store_true",
         help="Only use new data for training.",
     )
+    parser.add_argument(
+        "--descriptor_cols",
+        default=None,
+        nargs="+",
+        help="Descriptor columns to use for training. If not provided, will calculate descriptors from SMILES.",
+    )
+
     args = parser.parse_args()
 
     fit_ensemble(
@@ -194,4 +201,5 @@ if __name__ == "__main__":
         original_only=args.original_only,
         new_only=args.new_only,
         split_save_dir=args.split_save_dir,
+        descriptor_cols=args.descriptor_cols,
     )
