@@ -21,6 +21,16 @@ protac_permeability
 └── plot_style.py
 ```
 
+```sh
+data
+├── dois.csv                            # mined publication dois
+├── new_protacs_raw.csv                 # new raw data 
+├── new_protacs_parsed.csv              # new raw data with unified units and canonical SMILES
+├── protacdb.csv                        # PROTAC-DB 3.0 dataset
+├── protacdb_filtered.csv               # filtered records from PROTAC-DB 3.0 with PAMPA measurements
+└── combined_protacs.csv                # final dataset
+```
+
 ### Dependencies
 The dependencies in this project are managed by `uv`, to install them run 
 ```sh
