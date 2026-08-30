@@ -1,4 +1,4 @@
-# Developed by Yaochen Rao https://github.com/yaochenr/PMC_Data_Mining
+# Source: https://github.com/yaochenr/PMC_Data_Mining
 import json
 from argparse import ArgumentParser
 from pathlib import Path
