@@ -98,11 +98,13 @@ descriptor_functions = {
 }
 
 
-def calculate_properties(smiles: str) -> list[float | None]:
+def calculate_properties(
+    smiles: str, descriptors: dict[str, callable]
+) -> list[float | None]:
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
-        return [None] * len(descriptor_functions)
-    result = [func(mol) for func in descriptor_functions.values()]
+        return [None] * len(descriptors)
+    result = [func(mol) for func in descriptors.values()]
     return result
 
 
