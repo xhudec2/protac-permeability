@@ -222,4 +222,11 @@ models/*
 splits/*
 figures/*
 *.DS_Store
-!protac_permeability/paper_figures.ipynb
+!notebooks/paper_figures.ipynb
+
+# Apptainer build output
+apptainer/*.sif
+
+# Ad-hoc `uv pip install --target=...` packages for one-off notebooks that
+# need something not baked into any .sif (see notebooks/*.ipynb for which)
+apptainer/hf_extra_pkgs/

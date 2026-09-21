@@ -1,0 +1,16 @@
+# uv configuration used only while building the container image (see
+# UV_CONFIG_FILE in protac-permeability.def). It does not affect `uv`
+# commands run on the host outside the container.
+#
+# - link-mode "copy": uv's default hardlinks packages from its cache into
+#   the venv, which is fragile inside the build sandbox and would leave the
+#   venv depending on a cache directory that gets deleted after the build.
+# - python-preference "only-system": reuse the base image's interpreter
+#   instead of having uv download its own.
+# - python-downloads "never": never fetch Python at build time.
+# - compile-bytecode: precompile .pyc files at build time so the immutable,
+#   baked venv starts up faster at run time.
+link-mode = "copy"
+python-preference = "only-system"
+python-downloads = "never"
+compile-bytecode = true

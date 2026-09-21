@@ -1,0 +1,64 @@
+Bootstrap: docker
+From: python:3.12-slim
+
+# Build context is expected to be the repository root, e.g.:
+#   apptainer build apptainer/protac-permeability.sif apptainer/protac-permeability.def
+%files
+    pyproject.toml /opt/build/pyproject.toml
+    uv.lock /opt/build/uv.lock
+    README.md /opt/build/README.md
+    apptainer/uv.toml /opt/build/uv.toml
+
+%post
+    set -eu
+    export DEBIAN_FRONTEND=noninteractive
+    # On systems without a proper subuid/subgid range, apptainer's fakeroot
+    # build falls back to a single-UID namespace mapping, under which apt's
+    # privilege-drop for its http downloader (setgroups/seteuid to _apt)
+    # fails. Sandboxing as root avoids that; the build itself is still an
+    # isolated, throwaway container filesystem.
+    APT_OPTS="-o APT::Sandbox::User=root"
+    apt-get $APT_OPTS update
+    apt-get $APT_OPTS install -y --no-install-recommends \
+        build-essential \
+        ca-certificates \
+        curl \
+        default-jre-headless \
+        git
+    apt-get $APT_OPTS clean
+    rm -rf /var/lib/apt/lists/*
+
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    export PATH="/root/.local/bin:$PATH"
+
+    # Bake all third-party dependencies (declared in the project's own
+    # pyproject.toml/uv.lock, copied in above) into a venv that lives inside
+    # the image. The project package itself is deliberately NOT installed
+    # here (--no-install-project): it is meant to be picked up live from the
+    # repository, which is bind-mounted at run time. See apptainer/README.md.
+    export UV_CONFIG_FILE=/opt/build/uv.toml
+    export UV_PROJECT_ENVIRONMENT=/opt/venv
+    cd /opt/build
+    uv sync --frozen --no-install-project --extra plotting
+
+    rm -rf /opt/build /root/.local /root/.cache
+
+%environment
+    export PATH="/opt/venv/bin:$PATH"
+    # Not on PYTHONPATH: run scripts as modules (`python -m
+    # protac_permeability....`) from the repository root instead, so the
+    # live, bind-mounted source is always what gets imported.
+
+%runscript
+    exec python "$@"
+
+%labels
+    Author ribes.stefano@gmail.com
+    Application protac-permeability
+
+%help
+    Runtime image for the protac-permeability project: Python 3.12 plus all
+    third-party dependencies from pyproject.toml/uv.lock, baked into
+    /opt/venv. It does NOT contain the project's own source code — bind-mount
+    the repository at run time and run code from it. See apptainer/README.md
+    for build and usage instructions.

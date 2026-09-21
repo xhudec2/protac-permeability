@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 from pathlib import Path
+from typing import Tuple, Generator
 
 import numpy as np
 import pandas as pd
@@ -31,6 +32,16 @@ def save_split(
     split: int,
     save_dir: str,
 ) -> None:
+    """Write a fold's train/test rows to CSV under save_dir/{train,test}/split_{split}.csv.
+
+    Args:
+        df: Full dataset to slice into train/test rows.
+        train_idx: Row indices (into df) belonging to the training set.
+        test_idx: Row indices (into df) belonging to the test set.
+        split: Index of this fold, used in the output filenames.
+        save_dir: Directory under which "train/" and "test/" subdirectories
+            are created (if missing) and the CSVs are written.
+    """
     splits_dir = Path(save_dir)
     (splits_dir / "train").mkdir(parents=True, exist_ok=True)
     (splits_dir / "test").mkdir(parents=True, exist_ok=True)
@@ -47,7 +58,24 @@ def get_splits_butina(
     groups: np.ndarray,
     n_splits: int,
     current_seed: int,
-) -> tuple[np.ndarray, np.ndarray]:
+) -> Generator[Tuple[np.ndarray, np.ndarray], None, None]:
+    """Yield scaffold-grouped, source-stratified (train_idx, test_idx) folds.
+
+    Args:
+        smiles: Canonical SMILES for each row; only used for its length by
+            the underlying splitter.
+        source: Per-row data-source label ("new" or "original") to
+            stratify folds on.
+        groups: Per-row scaffold cluster id (from `butina_groups`); rows
+            sharing a group are kept together in the same fold.
+        n_splits: Number of folds to generate.
+        current_seed: Random seed controlling the shuffle before splitting.
+
+    Yields:
+        Tuples of (train_idx, test_idx) index arrays, one per fold.
+    """
+    # Group folds by scaffold cluster so near-duplicate scaffolds never
+    # split across train/test, while still stratifying on data source.
     cv = StratifiedGroupKFold(
         n_splits=n_splits, shuffle=True, random_state=current_seed
     )
@@ -59,7 +87,22 @@ def get_splits(
     source: np.ndarray,
     n_splits: int,
     current_seed: int,
-) -> tuple[np.ndarray, np.ndarray]:
+) -> Generator[Tuple[np.ndarray, np.ndarray], None, None]:
+    """Yield source-stratified (train_idx, test_idx) folds, without scaffold grouping.
+
+    Args:
+        smiles: Canonical SMILES for each row; only used for its length by
+            the underlying splitter.
+        source: Per-row data-source label ("new" or "original") to
+            stratify folds on.
+        n_splits: Number of folds to generate.
+        current_seed: Random seed controlling the shuffle before splitting.
+
+    Yields:
+        Tuples of (train_idx, test_idx) index arrays, one per fold.
+    """
+    # Plain stratified folds (no scaffold-leakage protection), balanced
+    # by data source (new vs. original) only.
     cv = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=current_seed)
     yield from cv.split(smiles, source)
 
@@ -75,10 +118,46 @@ def fit_ensemble(
     dist_threshold: None | float = None,
     split_save_dir: str = None,
 ) -> list[list[float]]:
+    """Cross-validate and save a Ridge-based ensemble permeability surrogate.
+
+    For each of `num_repeats` random seeds, splits the dataset into
+    `n_models` folds (grouped by scaffold cluster when `dist_threshold` is
+    given, otherwise plain stratified folds), fits one Ridge model per
+    fold, and aggregates out-of-fold predictions to report mean±std
+    Spearman correlation, RMSE, and R2 across repeats. The full set of
+    fitted models is saved as an `EnsemblePermeabilitySurrogate`.
+
+    Args:
+        data_path: Path to the CSV file with SMILES, logPAMPA, and
+            (optionally) precomputed descriptor columns.
+        save_dir: Directory to save the fitted ensemble model to.
+        n_models: Number of folds/models per repeat.
+        descriptor_cols: Column names to use as precomputed descriptors.
+            If None, descriptors are computed from SMILES via
+            `calculate_properties`.
+        num_repeats: Number of times to repeat the full CV process with a
+            different random seed.
+        original_only: If True, restrict training data (not test data) to
+            rows sourced from PROTAC-DB.
+        new_only: If True, restrict training data (not test data) to rows
+            sourced from newly-mined literature data.
+        dist_threshold: Butina clustering distance threshold. If given,
+            folds are grouped by scaffold cluster to prevent
+            similar-scaffold leakage between train and test; if None,
+            plain stratified folds are used instead.
+        split_save_dir: If given, directory to write each fold's exact
+            train/test CSVs to, for reproducibility.
+
+    Returns:
+        A list of `[mean, std]` pairs across repeats, in order:
+        [Spearman correlation, RMSE, R2].
+    """
     df = pd.read_csv(data_path)
     smiles = np.array([canonicalize_smiles(smi) for smi in df["SMILES"]])
 
     if descriptor_cols is None:
+        # No precomputed descriptors given: compute the full RDKit
+        # descriptor set from SMILES on the fly.
         descriptors = [calculate_properties(smi) for smi in smiles]
         X = np.stack(descriptors)
     else:
@@ -86,11 +165,18 @@ def fit_ensemble(
 
     y = df["logPAMPA"].values
     models = []
+    # preds accumulates each repeat's out-of-fold predictions across the
+    # whole dataset, so every row gets exactly one held-out prediction
+    # per repeat, letting us score against the full y at once.
     preds = np.zeros((num_repeats, len(y)))
     source = np.where(df.protac_db_id.isna(), "new", "original")
     for repeat in range(num_repeats):
+        # Re-seed per repeat so each of the num_repeats runs uses a
+        # different fold assignment, giving a spread of CV estimates.
         current_seed = RANDOM_SEED + repeat
         if dist_threshold is not None:
+            # Cluster by scaffold similarity and fold on those clusters
+            # to avoid leaking near-identical scaffolds across train/test.
             groups, _ = butina_groups(smiles, threshold=dist_threshold)
             splits_generator = get_splits_butina(
                 smiles, source, groups, n_splits=n_models, current_seed=current_seed
@@ -106,6 +192,8 @@ def fit_ensemble(
             test_X = X[itest]
             original_mask = ~df.protac_db_id.isna()
 
+            # Test folds are always left unrestricted; only training data
+            # is filtered down to a single source when requested.
             if original_only:
                 train_X = train_X[original_mask.values[itrain]]
                 train_y = train_y[original_mask.values[itrain]]
@@ -119,6 +207,8 @@ def fit_ensemble(
             models.append(model)
             preds[repeat, itest] = model.predict(test_X)
             if split_save_dir is not None:
+                # Persist the exact train/test rows for this fold so the
+                # split can be reproduced or audited later.
                 save_split(
                     df,
                     train_idx=itrain,
@@ -127,6 +217,8 @@ def fit_ensemble(
                     save_dir=split_save_dir,
                 )
 
+    # Score each repeat's full set of out-of-fold predictions against the
+    # true targets, then report the mean/std across repeats.
     sps = [spearmanr(y, preds[i])[0] for i in range(num_repeats)]
     rmses = [np.sqrt(mean_squared_error(y, preds[i])) for i in range(num_repeats)]
     r2 = [r2_score(y, preds[i]) for i in range(num_repeats)]

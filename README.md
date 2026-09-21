@@ -17,8 +17,10 @@ protac_permeability
 │   ├── __init__.py
 │   ├── surrogate_model.py              # model definition
 │   └── fit_surrogate.py                # model training
-├── paper_figures.ipynb                 # paper figures notebook
 └── plot_style.py
+
+notebooks
+└── paper_figures.ipynb                 # paper figures notebook
 ```
 
 ### Data Structure
@@ -105,7 +107,7 @@ uv run protac_permeability/permeability_surrogate/fit_surrogate.py --help
 ```
 
 ### Figures
-To reproduce figures and results from the paper, run `protac_permeability/paper_figures.ipynb`. You need to install `plotting` dependencies.
+To reproduce figures and results from the paper, run `notebooks/paper_figures.ipynb`. You need to install `plotting` dependencies.
 
 ### AI Usage Statement
 During the development of the code we used LLM tools like Claude and Gemini to help with tasks such as coding, plotting, code refactoring, reviewing, debugging, writing prompts for the LLM miner, writing documentation and drafting.
