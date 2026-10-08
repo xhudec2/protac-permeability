@@ -5,7 +5,14 @@ import numpy as np
 from huggingface_hub import snapshot_download
 from sklearn.preprocessing import StandardScaler
 
-from protac_permeability.chem_utils import calculate_properties, canonicalize_smiles
+from protac_permeability.chem_utils import (
+    calculate_properties,
+    canonicalize_smiles,
+    descriptor_functions,
+)
+
+DEFAULT_DESCRIPTORS = descriptor_functions.copy()
+DEFAULT_DESCRIPTORS.pop("CharVol")
 
 
 class PermeabilitySurrogate:
@@ -18,7 +25,10 @@ class PermeabilitySurrogate:
             if isinstance(X, str):
                 X = [X]
             smiles = [canonicalize_smiles(smi) for smi in X]
-            descriptors = [calculate_properties(smi) for smi in smiles]
+            descriptors = [
+                calculate_properties(smi, descriptors=DEFAULT_DESCRIPTORS)
+                for smi in smiles
+            ]
             X = np.stack(descriptors)
 
         if self.scaler is None:
@@ -34,7 +44,10 @@ class PermeabilitySurrogate:
             if isinstance(X, str):
                 X = [X]
             smiles = [canonicalize_smiles(smi) for smi in X]
-            descriptors = [calculate_properties(smi) for smi in smiles]
+            descriptors = [
+                calculate_properties(smi, descriptors=DEFAULT_DESCRIPTORS)
+                for smi in smiles
+            ]
             X = np.stack(descriptors)
 
         X = self.scaler.transform(X)
