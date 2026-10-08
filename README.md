@@ -48,7 +48,7 @@ uv sync --extra plotting
 
 ###  Pipeline
 #### 1) LLM Data Mining
-The mining step is done using an external repository in `extern/LLM-TPD-Extraction`. For this it is necessary to create an `.env` file as described in `extern/LLM-TPD-Extraction/README.md`. Note that, since this is an external fork, it cannot be anonymized and is therefore excluded from this repository for the purposes of the review.
+The mining step is done using an external repository in `extern/LLM-TPD-Extraction`. For this it is necessary to create an `.env` file as described in `extern/LLM-TPD-Extraction/README.md`.
 
 First mining the publications automatically can be done as
 
